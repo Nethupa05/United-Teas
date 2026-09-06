@@ -52,3 +52,5 @@ src/
 3. **Contact form**: `ContactForm.jsx` currently just shows a "thank you" message on submit. Wire it to an email service (e.g. Formspree, Resend, a small serverless function) or a backend endpoint.
 4. **Map embed**: `/contact` and `/global-clients` have placeholder blocks where a Google Maps or Mapbox embed should go.
 5. **Favicon**: replace `public/favicon.svg` with the real United Teas mark.
+
+United Teas

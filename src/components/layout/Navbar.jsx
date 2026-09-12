@@ -37,7 +37,8 @@ export default function Navbar() {
     setAboutOpenMobile(false);
   }, [location.pathname]);
 
-  const solidBg = scrolled || mobileOpen;
+  const isCollection = location.pathname === "/tea-collection";
+  const solidBg = scrolled || mobileOpen || isCollection;
 
   return (
     <header

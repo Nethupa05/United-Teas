@@ -11,7 +11,7 @@ const links = [
     children: [
       { label: "Who We Are", to: "/about" },
       { label: "Our Legacy", to: "/about/legacy" },
-      { label: "The Visionaries", to: "/about/visionaries" },
+      { label: "Achievements", to: "/about/achievements" },
     ],
   },
   { label: "Global Clients", to: "/global-clients" },
@@ -47,7 +47,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container-page flex items-center justify-between h-20">
-        <Link to="/" className="font-display text-2xl text-ivory tracking-tight">
+        <Link to="/" className="font-display text-2xl text-black tracking-tight">
           United Teas
         </Link>
 
@@ -55,7 +55,7 @@ export default function Navbar() {
           {links.map((link) =>
             link.children ? (
               <div key={link.label} className="relative group py-8 -my-8">
-                <button className="flex items-center gap-1 text-[0.95rem] text-cream/90 hover:text-gold transition-colors">
+                <button className="flex items-center gap-1 text-[0.95rem] text-black hover:text-gold transition-colors">
                   {link.label}
                   <ChevronDown size={14} strokeWidth={2} />
                 </button>
@@ -84,7 +84,7 @@ export default function Navbar() {
                 to={link.to}
                 className={({ isActive }) =>
                   `relative text-[0.95rem] pb-1 transition-colors ${
-                    isActive ? "text-gold" : "text-cream/90 hover:text-gold"
+                    isActive ? "text-black" : "text-black hover:text-gold"
                   }`
                 }
               >

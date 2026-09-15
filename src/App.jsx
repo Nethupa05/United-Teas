@@ -7,7 +7,7 @@ import TeaCollection from "./pages/TeaCollection";
 import AboutLayout from "./pages/about/AboutLayout";
 import WhoWeAre from "./pages/about/WhoWeAre";
 import Legacy from "./pages/about/Legacy";
-import Visionaries from "./pages/about/Visionaries";
+import Achievements from "./pages/about/Achievements";
 import GlobalClients from "./pages/GlobalClients";
 import Feedback from "./pages/Feedback";
 import Contact from "./pages/Contact";
@@ -35,7 +35,7 @@ export default function App() {
           <Route path="/about" element={<AboutLayout />}>
             <Route index element={<WhoWeAre />} />
             <Route path="legacy" element={<Legacy />} />
-            <Route path="visionaries" element={<Visionaries />} />
+            <Route path="achievements" element={<Achievements />} />
           </Route>
           <Route path="/global-clients" element={<GlobalClients />} />
           <Route path="/feedback" element={<Feedback />} />

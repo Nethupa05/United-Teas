@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
+import logo from "../../../public/images/logo.png";
 
 const links = [
   { label: "Home", to: "/" },
-  { label: "Tea Collection", to: "/tea-collection" },
-  {
-    label: "About Us",
-    to: "/about",
-    children: [
-      { label: "Who We Are", to: "/about" },
-      { label: "Our Legacy", to: "/about/legacy" },
-      { label: "Achievements", to: "/about/achievements" },
-    ],
-  },
-  { label: "Global Clients", to: "/global-clients" },
-  { label: "Feedback", to: "/feedback" },
-  { label: "Contact Us", to: "/contact" },
+  { label: "About Us", to: "/about" },
+  { label: "Our Teas", to: "/tea-collection" },
+  { label: "Global Reach", to: "/global-clients" },
 ];
 
 export default function Navbar() {
@@ -37,30 +28,35 @@ export default function Navbar() {
     setAboutOpenMobile(false);
   }, [location.pathname]);
 
-  const isCollection = location.pathname === "/tea-collection";
-  const solidBg = scrolled || mobileOpen || isCollection;
+  // Reversed per request: solid at top, glassmorphism once scrolled.
+  const headerBg =
+    mobileOpen && !scrolled
+      ? "bg-forest-dark"
+      : scrolled
+      ? "bg-forest-dark/70 backdrop-blur-xl backdrop-saturate-150 shadow-[0_1px_0_0_rgba(172,138,70,0.25)]"
+      : "bg-forest-dark";
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        solidBg ? "bg-forest-dark shadow-[0_1px_0_0_rgba(172,138,70,0.35)]" : "bg-transparent"
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 font-jakarta transition-all duration-300 ${headerBg}`}
     >
-      <div className="container-page flex items-center justify-between h-20">
-        <Link to="/" className="font-display text-2xl text-black tracking-tight">
-          United Teas
+      <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 xl:px-16 flex items-center justify-between h-20">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <img src={logo} alt="United Teas" className="h-14 w-auto" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-9">
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-8">
           {links.map((link) =>
             link.children ? (
               <div key={link.label} className="relative group py-8 -my-8">
-                <button className="flex items-center gap-1 text-[0.95rem] text-black hover:text-gold transition-colors">
+                <button className="flex items-center gap-1 text-[0.95rem] font-medium text-cream hover:text-gold transition-colors">
                   {link.label}
                   <ChevronDown size={14} strokeWidth={2} />
                 </button>
                 <div className="absolute left-0 top-full pt-2 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
-                  <div className="min-w-[200px] bg-forest-dark border border-gold/25 py-2">
+                  <div className="min-w-[200px] bg-forest-dark/95 backdrop-blur-md border border-gold/25 py-2 rounded-md">
                     {link.children.map((child) => (
                       <NavLink
                         key={child.to}
@@ -83,8 +79,8 @@ export default function Navbar() {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `relative text-[0.95rem] pb-1 transition-colors ${
-                    isActive ? "text-black" : "text-black hover:text-gold"
+                  `relative text-[0.95rem] font-medium pb-1 transition-colors ${
+                    isActive ? "text-gold" : "text-cream hover:text-gold"
                   }`
                 }
               >
@@ -92,8 +88,17 @@ export default function Navbar() {
               </NavLink>
             )
           )}
+
+          {/* Highlighted Contact Us */}
+          <NavLink
+            to="/contact"
+            className="ml-2 px-5 py-2.5 rounded-full bg-gold text-forest-dark text-[0.9rem] font-semibold hover:bg-gold/90 transition-colors"
+          >
+            Contact Us
+          </NavLink>
         </nav>
 
+        {/* Mobile toggle */}
         <button
           className="lg:hidden text-cream"
           onClick={() => setMobileOpen((v) => !v)}
@@ -103,13 +108,14 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden bg-forest-dark border-t border-gold/20 px-6 pb-6 pt-2">
           {links.map((link) =>
             link.children ? (
               <div key={link.label} className="border-b border-cream/10">
                 <button
-                  className="w-full flex items-center justify-between py-4 text-cream"
+                  className="w-full flex items-center justify-between py-4 text-cream font-medium"
                   onClick={() => setAboutOpenMobile((v) => !v)}
                 >
                   {link.label}
@@ -132,12 +138,19 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="block py-4 border-b border-cream/10 text-cream"
+                className="block py-4 border-b border-cream/10 text-cream font-medium"
               >
                 {link.label}
               </Link>
             )
           )}
+
+          <Link
+            to="/contact"
+            className="mt-5 inline-block px-6 py-2.5 rounded-full bg-gold text-forest-dark text-sm font-semibold"
+          >
+            Contact Us
+          </Link>
         </div>
       )}
     </header>

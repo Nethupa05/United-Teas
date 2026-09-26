@@ -17,6 +17,7 @@ export default function CoreValues() {
         <SectionHeading
           title="What drives us"
           lede="Four principles guide every decision, from the auction floor to the final pack."
+          className="[&_h2]:font-jakarta font-jakarta [&_h2]:font-bold"
         />
 
         <div className="mt-14 border-t border-forest/10">

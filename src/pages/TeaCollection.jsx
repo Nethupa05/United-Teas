@@ -177,7 +177,7 @@ export default function TeaCollection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="italic font-normal transition-colors duration-500"
+                    className="italic font-caveat transition-colors duration-500"
                     style={{ color: activeTea.color }}
                   >
                     {activeTea.keyword}

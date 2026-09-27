@@ -12,7 +12,7 @@ const icons = {
 
 export default function CoreValues() {
   return (
-    <section className="py-24 bg-cream">
+    <section className="py-24 bg-ivory">
       <div className="container-page">
         <SectionHeading
           title="What drives us"

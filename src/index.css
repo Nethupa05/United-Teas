@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -15,6 +16,7 @@
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-caveat: "Caveat", cursive;
 }
 
 @layer base {

@@ -22,7 +22,7 @@ export default function ExportStory() {
         <motion.div style={{ x: imageX }} className="md:col-span-5 relative">
           <div className="relative rounded-r-sm overflow-hidden ring-1 ring-gold/30 shadow-[0_12px_40px_-12px_rgba(28,43,32,0.35)] ml-[calc(-3rem)] w-[calc(100%+3rem)] md:ml-[calc(-1*max(4.5rem,calc(50vw-34.5rem)))] md:w-[calc(100%+max(4.5rem,calc(50vw-34.5rem)))]">
             <img
-              src="/public/images/engteadrink.webp"
+              src="/images/engteadrink.webp"
               alt="Tea leaves being sorted and prepared for export"
               className="w-full h-[420px] md:h-[520px] object-cover grayscale-[15%] sepia-[15%] contrast-[1.05]"
             />

@@ -25,12 +25,14 @@ export default function Footer() {
     <footer className="bg-forest-dark text-cream/80">
       <div className="container-page py-16 grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1.2fr] gap-12">
         <div>
-          <p className="font-display text-2xl text-ivory">United Teas</p>
-          <p className="mt-4 text-sm leading-relaxed max-w-sm">
-            Garden fresh, Pure Ceylon Tea from the hill country of Sri Lanka — handpicked,
-            traditionally crafted, and exported to trade partners across the world.
-          </p>
-          <div className="flex gap-4 mt-6">
+          <div className="flex flex-col items-center w-max">
+            <img src="/images/logo.png" alt="United Teas Logo" className="w-40 object-contain" />
+            <p className="font-display text-2xl text-ivory text-center mt-4 leading-tight">UNITED <br /> TEAS</p>
+            {/* <p className="mt-4 text-sm leading-relaxed max-w-sm text-center">
+              Garden fresh, Pure Ceylon Tea from the hill country of Sri Lanka — handpicked,
+              traditionally crafted, and exported to trade partners across the world.
+            </p> */}
+            <div className="flex gap-4 mt-8">
             <a href="#" aria-label="Facebook" className="text-cream/60 hover:text-gold transition-colors">
               <FacebookIcon />
             </a>
@@ -41,6 +43,7 @@ export default function Footer() {
               <LinkedinIcon />
             </a>
           </div>
+        </div>
         </div>
 
         <div>
@@ -74,7 +77,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="hairline opacity-15" />
+      {/* <div className="hairline opacity-15" /> */}
 
       <div className="container-page py-6 flex flex-col md:flex-row gap-3 justify-between items-center text-xs text-cream/50">
         <p>© {new Date().getFullYear()} United Teas (Pvt) Ltd. All rights reserved.</p>

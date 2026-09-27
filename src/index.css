@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -15,6 +16,7 @@
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-caveat: "Caveat", cursive;
 }
 
 @layer base {
@@ -65,5 +67,23 @@
     max-width: 1180px;
     margin-inline: auto;
     padding-inline: 1.5rem;
+  }
+
+  .animate-scroll {
+    animation: scroll 35s linear infinite;
+  }
+
+  .pause-scroll {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Translates by half of the container width since we duplicate the elements */
+    transform: translateX(-50%);
   }
 }

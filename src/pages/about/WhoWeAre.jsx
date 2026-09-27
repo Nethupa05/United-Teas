@@ -170,10 +170,10 @@ export default function WhoWeAre() {
           </div>
         </div>
 
-        <div className="hairline mb-16" />
+        {/* <div className="hairline mb-16" /> */}
 
         {/* From Garden to Cup process */}
-        <div
+        {/* <div
           ref={processRef}
           className={`transition-all duration-700 ease-out ${
             processInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -209,7 +209,7 @@ export default function WhoWeAre() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

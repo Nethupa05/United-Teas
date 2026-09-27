@@ -2,7 +2,7 @@ export const testimonials = [
   {
     id: "t1",
     quote:
-      "United Teas has been a dependable partner for years. Every shipment arrives consistent with the sample we approved — that reliability is rare in this trade.",
+      "United Teas has been a dependable partner for years. Every shipment arrives consistent with the sample we approved.",
     name: "Trading Partner",
     location: "Dubai, UAE",
   },

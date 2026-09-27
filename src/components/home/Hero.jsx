@@ -1,89 +1,110 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Button from "../ui/Button";
-
-const slides = [
-  {
-    kicker: "From Hill Country to the Globe",
-    headline: "Fresh tea, direct from the gardens of Sri Lanka",
-  },
-  {
-    kicker: "Tradition. Quality. Integrity.",
-    headline: "150 years of Ceylon tea heritage, in every cup",
-  },
-];
+import { useState, useRef } from "react";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Hero() {
-  const [index, setIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showLogo, setShowLogo] = useState(false);
+  const videoRef = useRef(null);
+  const containerRef = useRef(null);
 
-  useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 6000);
-    return () => clearInterval(id);
-  }, []);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
 
-  const slide = slides[index];
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
+  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0px", "40px"]);
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      if (videoRef.current.currentTime >= 8) {
+        if (!showLogo) setShowLogo(true);
+      } else {
+        if (showLogo) setShowLogo(false);
+      }
+    }
+  };
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
-    <section className="relative bg-forest-dark overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.06]">
-        <div className="w-full h-full" style={{
-          backgroundImage: "radial-gradient(circle, #AC8A46 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }} />
-      </div>
+    <section ref={containerRef} className="relative w-full h-[150vh] bg-ivory">
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex justify-center items-start">
+        <motion.div
+          className="relative w-full h-full overflow-hidden bg-forest-dark shadow-xl"
+          style={{ scale, borderRadius, transformOrigin: "top center" }}
+        >
+          {/* Video Background */}
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            onTimeUpdate={handleTimeUpdate}
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/hero-vid.mp4" type="video/mp4" />
+          </video>
 
-      <div className="container-page relative grid lg:grid-cols-[1.3fr_0.7fr] gap-16 pt-40 pb-24 lg:pt-48 lg:pb-32">
-        <div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+          {/* Dynamic overlay: darkens and blurs the video when the logo appears */}
+          <div
+            className={`absolute inset-0 pointer-events-none transition-all duration-1000 ${
+              showLogo
+                ? "bg-black/40 backdrop-blur-md"
+                : "bg-black/25 backdrop-blur-none"
+            }`}
+          />
+
+          {/* Controls Overlay */}
+          <div className="absolute bottom-8 right-8 flex items-center gap-4 z-20">
+            <button
+              onClick={toggleMute}
+              className="p-3 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-ivory transition-all border border-white/20 shadow-lg"
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
             >
-              <p className="text-gold text-sm mb-5">{slide.kicker}</p>
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.1] text-ivory max-w-xl">
-                {slide.headline}
-              </h1>
-            </motion.div>
-          </AnimatePresence>
-
-          <p className="mt-7 text-cream/70 max-w-md leading-relaxed">
-            United Teas exports garden fresh, Pure Ceylon Tea — handpicked from the country's
-            finest plantations and crafted the traditional way, for over twelve years.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button to="/tea-collection" variant="solid">Explore the collection</Button>
-            <Button to="/about" variant="outline">Our story</Button>
+              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            </button>
+            <button
+              onClick={togglePlay}
+              className="p-3 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-ivory transition-all border border-white/20 shadow-lg"
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+            </button>
           </div>
 
-          <div className="flex gap-2 mt-14">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Show slide ${i + 1}`}
-                className={`h-[2px] transition-all duration-300 ${
-                  i === index ? "w-8 bg-gold" : "w-4 bg-cream/25"
-                }`}
-              />
-            ))}
+          {/* Logo Overlay */}
+          <div
+            className={`absolute inset-0 z-10 flex justify-center items-center pointer-events-none transition-opacity duration-1000 ${
+              showLogo ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src="/images/unitedTeasLogo.png"
+              alt="United Teas Logo"
+              className="w-[280px] md:w-[400px] lg:w-[500px] object-contain drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+            />
           </div>
-        </div>
-
-        <div className="hidden lg:flex flex-col justify-end border-l border-gold/25 pl-10">
-          <p className="font-display text-5xl text-gold">12+</p>
-          <p className="mt-2 text-cream/70 text-sm max-w-[16ch]">
-            years exporting Pure Ceylon Tea to trade partners worldwide
-          </p>
-          <div className="hairline my-8 opacity-20" />
-          <p className="font-display text-5xl text-gold">100%</p>
-          <p className="mt-2 text-cream/70 text-sm max-w-[16ch]">
-            Pure Ceylon Tea, handpicked and garden fresh
-          </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

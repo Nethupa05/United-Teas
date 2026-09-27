@@ -12,29 +12,50 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [aboutOpenMobile, setAboutOpenMobile] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      if (location.pathname === "/") {
+        setPastHero(window.scrollY > window.innerHeight * 1.35);
+      } else {
+        setPastHero(false);
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     setMobileOpen(false);
     setAboutOpenMobile(false);
   }, [location.pathname]);
 
+  const isHome = location.pathname === "/";
+  const isTeaCollection = location.pathname === "/tea-collection";
+  const useDarkText = isHome && pastHero;
+  const navTextColor = useDarkText ? "text-black hover:text-gold" : "text-cream hover:text-gold";
+  const iconColor = useDarkText ? "text-black" : "text-cream";
+
   // Reversed per request: solid at top, glassmorphism once scrolled.
+  // Exception: User requested navbar to stay completely transparent on Home page even when scrolled.
   const headerBg =
-    mobileOpen && !scrolled
+    useDarkText
+      ? "bg-ivory"
+      : mobileOpen && !scrolled
       ? "bg-forest-dark"
+      : isTeaCollection
+      ? "bg-forest-dark"
+      : isHome
+      ? "bg-transparent"
       : scrolled
       ? "bg-forest-dark/70 backdrop-blur-xl backdrop-saturate-150 shadow-[0_1px_0_0_rgba(172,138,70,0.25)]"
-      : "bg-forest-dark";
+      : "bg-transparent";
 
   return (
     <header
@@ -51,7 +72,7 @@ export default function Navbar() {
           {links.map((link) =>
             link.children ? (
               <div key={link.label} className="relative group py-8 -my-8">
-                <button className="flex items-center gap-1 text-[0.95rem] font-medium text-cream hover:text-gold transition-colors">
+                <button className={`flex items-center gap-1 text-[0.95rem] font-medium transition-colors ${navTextColor}`}>
                   {link.label}
                   <ChevronDown size={14} strokeWidth={2} />
                 </button>
@@ -80,7 +101,7 @@ export default function Navbar() {
                 to={link.to}
                 className={({ isActive }) =>
                   `relative text-[0.95rem] font-medium pb-1 transition-colors ${
-                    isActive ? "text-gold" : "text-cream hover:text-gold"
+                    isActive ? "text-gold" : navTextColor
                   }`
                 }
               >
@@ -100,7 +121,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden text-cream"
+          className={`lg:hidden transition-colors duration-300 ${iconColor}`}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
         >

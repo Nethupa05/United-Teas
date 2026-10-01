@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 // lucide-react dropped brand glyphs — small inline marks instead.
 const FacebookIcon = (props) => (
@@ -21,9 +22,32 @@ const LinkedinIcon = (props) => (
 );
 
 export default function Footer() {
+  const [footerHeight, setFooterHeight] = useState(0);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (footerRef.current) {
+        setFooterHeight(footerRef.current.offsetHeight);
+      }
+    };
+    
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    
+    // Fallback for when fonts/images load
+    const timeout = setTimeout(updateHeight, 150);
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
-    <footer className="bg-forest-dark text-cream/80">
-      <div className="container-page py-16 grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1.2fr] gap-12">
+    <>
+      <div style={{ height: footerHeight }} className="w-full relative -z-20 pointer-events-none" />
+      <footer ref={footerRef} className="fixed bottom-0 left-0 w-full bg-forest-dark text-cream/80 z-0">
+        <div className="container-page py-16 grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1.2fr] gap-12">
         <div>
           <div className="flex flex-col items-center w-max">
             <img src="/images/logo.png" alt="United Teas Logo" className="w-40 object-contain" />
@@ -87,5 +111,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }

@@ -28,7 +28,7 @@ export default function App() {
     <div className={isTeaCollection ? "h-screen overflow-hidden flex flex-col" : "min-h-screen flex flex-col"}>
       <ScrollToTop />
       <Navbar />
-      <main className={isTeaCollection ? "flex-1 overflow-hidden relative" : "flex-1"}>
+      <main className={isTeaCollection ? "flex-1 overflow-hidden relative bg-cream z-10" : "flex-1 relative bg-cream z-10"}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tea-collection" element={<TeaCollection />} />

@@ -5,8 +5,8 @@ import logo from "../../../public/images/logo.png";
 
 const links = [
   { label: "Home", to: "/" },
-  { label: "About Us", to: "/about" },
   { label: "Our Teas", to: "/tea-collection" },
+  { label: "About Us", to: "/about" },
   { label: "Global Reach", to: "/global-clients" },
 ];
 
@@ -38,6 +38,7 @@ export default function Navbar() {
 
   const isHome = location.pathname === "/";
   const isTeaCollection = location.pathname === "/tea-collection";
+  const isGlobalClients = location.pathname === "/global-clients";
   const useDarkText = isHome && pastHero;
   const navTextColor = useDarkText ? "text-black hover:text-gold" : "text-cream hover:text-gold";
   const iconColor = useDarkText ? "text-black" : "text-cream";
@@ -50,6 +51,8 @@ export default function Navbar() {
       : mobileOpen && !scrolled
       ? "bg-forest-dark"
       : isTeaCollection
+      ? "bg-forest-dark"
+      : isGlobalClients && !scrolled
       ? "bg-forest-dark"
       : isHome
       ? "bg-transparent"

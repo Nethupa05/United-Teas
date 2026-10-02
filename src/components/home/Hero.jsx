@@ -15,7 +15,7 @@ export default function Hero() {
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.5]);
-  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0px", "40px"]);
+  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0px", "1000px"]);
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {

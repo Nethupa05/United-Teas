@@ -35,7 +35,7 @@ function TeaserCard({ label, title, description, to, quote, index }) {
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="mb-6">
-          <span className="font-[family-name:var(--font-caveat)] text-gold text-2xl md:text-3xl tracking-wide mb-2 block">
+          <span className="font-[family-name:var(--font-caveat)] text-forest-light text-2xl md:text-3xl tracking-wide mb-2 block">
             {label}
           </span>
           <h3 className="font-jakarta text-3xl md:text-4xl text-forest-dark font-medium tracking-tight">

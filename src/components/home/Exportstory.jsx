@@ -33,7 +33,7 @@ export default function ExportStory() {
         <motion.div style={{ x: textX }} className="md:col-span-7">
           <h2 className="font-jakarta text-3xl md:text-4xl lg:text-[2.75rem] text-forest-dark leading-tight mb-6 max-w-lg">
             From our estates to <br className="hidden lg:block" />
-            <span className="font-[family-name:var(--font-caveat)] text-gold text-5xl md:text-6xl lg:text-[4.5rem] tracking-wide mt-2 inline-block">
+            <span className="font-[family-name:var(--font-caveat)] text-forest text-5xl md:text-6xl lg:text-[4.5rem] tracking-wide mt-2 inline-block">
               10+ countries
             </span>
           </h2>
